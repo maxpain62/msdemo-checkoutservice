@@ -33,3 +33,12 @@ spec:
   volumes:
     - name: home-jenkins
       emptyDir: {}
+    - name: buildkit-secret
+      secret:
+        secretName: ecr-cred
+        items:
+          - key: .dockerconfigjson
+            path: config.json
+    - name: certs
+      secret:
+        secretName: buildkit-client-certs 
