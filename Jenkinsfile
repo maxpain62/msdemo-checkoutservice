@@ -7,7 +7,7 @@ podTemplate(yaml: readTrusted('pod.yaml')) {
             container('go-build') {
                 sh '''
                 go mod download
-                GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -ldflags="-s -w" -o /checkoutservice .
+                GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -ldflags="-s -w" -o ./checkoutservice .
                 pwd 
                 ls -la
                 ls -la /
