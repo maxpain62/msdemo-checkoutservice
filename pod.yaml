@@ -6,7 +6,7 @@ metadata:
 spec:
   serviceAccountName: code-artifact-sa
   containers:
-    - name: go
+    - name: go-build
       image: golang:1.26.0
       command:
         - cat
