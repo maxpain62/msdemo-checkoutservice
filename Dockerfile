@@ -17,8 +17,8 @@
 
 FROM gcr.io/distroless/static
 
-WORKDIR /src
 COPY /checkoutservice /src/checkoutservice
+WORKDIR /src
 
 # Definition of this variable is used by 'skaffold debug' to identify a golang binary.
 # Default behavior - a failure prints a stack trace for the current goroutine.
