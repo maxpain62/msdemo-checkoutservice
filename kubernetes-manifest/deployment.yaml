@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msdemo-checkoutservice-deployment
+  labels:
+    app: msdemo-checkoutservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msdemo-checkoutservice
+  template:
+    metadata:
+      labels:
+        app: msdemo-checkoutservice
+    spec:
+      containers:
+        - name: msdemo-checkoutservice-container
+          image: 134448505602.dkr.ecr.ap-south-1.amazonaws.com/msdemo-checkoutservice:latest
+          env:
+            - name: PORT
+              value: "5050"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: "msdemo-productcatalogservice:3550"
+            - name: SHIPPING_SERVICE_ADDR
+              value: "msdemo-shippingservice:50051"
+            - name: PAYMENT_SERVICE_ADDR
+              value: "msdemo-paymentservice:50051"
+            - name: EMAIL_SERVICE_ADDR
+              value: "msdemo-emailservice:8080"
+            - name: CURRENCY_SERVICE_ADDR
+              value: "msdemo-currencyservice:7000"
+            - name: CART_SERVICE_ADDR
+              value: "msdemo-cartservice:7070"
+          ports:
+            - containerPort: 5050
+              protocol: TCP
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          livenessProbe:
+            grpc:
+              port: 5050
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            grpc:
+              port: 5050
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
